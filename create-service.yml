@@ -1,0 +1,21 @@
+---
+
+# Services are used to handle multiple deployment and provide access/expose of container to outer world
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-service
+  namespace: nginx
+
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80 #outer world port
+      targetPort: 80 # pods port
+  type: ClusterIP
+
+# after creating service you need to assign/expose port for container
+# command=> kubectl port-forward service/nginx-service -n nginx 8080:80 --address=0.0.0.0 
